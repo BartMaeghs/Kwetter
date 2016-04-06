@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html template="WEB-INF/template.xhtml"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      >
+    <ui:composition template="WEB-INF/template.xhtml">
+        <h:head>
+            <ui:define name="title"><title>Kwetter - #{loggedUserBean.username}</title></ui:define>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        </h:head>
+        <body>
+            <ui:define name="content">
+                <div class="col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">What's Kwettering?</div>
+                        <div class="panel-body">
+                            <h:form id="kweetForm">
+                                <f:viewParam name='user' value="#{loggedUserBean.username}"/>
+                                <h:panelGrid columns="4" cellpadding="5">
+                                    <p:inputText id="name" value="#{loggedUserBean.kweetContent}" />
+                                    <p:commandButton value="Just kweet it!" action="#{loggedUserBean.submitKweet()}" icon="ui-icon-check" update=":lekweets:KweetList">
+                                    </p:commandButton>
+                                </h:panelGrid>
+                            </h:form>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">Kweets</div>
+                        <div class="panel-body">
+                            <h:form id="lekweets">
+                                <p:dataList value="#{loggedUserBean.timelineKweets}" var="kweet" itemType="none" id="KweetList">
+                                    <div class="row">
+                                        <div class="col-sm-3">#{kweet.owner.screenName}, #{kweet.date}, #{kweet.location}</div>
+                                        <div class="col-sm-9">#{kweet.content}</div>
+                                    </div>
+                                    <hr/>
+                                </p:dataList>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">@Mentions</div>
+                        <div class="panel-body">
+                            <p:dataList value="#{loggedUserBean.user.mentions}" var="kweet" itemType="none">
+                                <f:facet name="header">
+                                </f:facet>
+                                <div class="row">
+                                    <div class="col-sm-3">#{kweet.owner.screenName}, #{kweet.date}, #{kweet.location}</div>
+                                    <div class="col-sm-9">#{kweet.content}</div>
+                                </div>
+                                <hr/>
+                            </p:dataList>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">#Hashtags</div>
+                        <div class="panel-body">
+                            <p:dataList value="#{loggedUserBean.hashtags}" var="hashsjwek" itemType="none">
+                                <div class="row">
+                                    <div class="col-sm-3">##{hashsjwek.hashTag}</div>
+                                    <div class="col-sm-9">#{hashsjwek.size()}</div>
+                                </div>
+                            </p:dataList>
+                        </div>
+                    </div>
+                </div>
+            </ui:define>
+        </body>
+    </ui:composition>
+</html>

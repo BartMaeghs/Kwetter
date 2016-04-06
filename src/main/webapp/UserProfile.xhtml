@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html template="WEB-INF/template.xhtml"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      >
+    <ui:composition template="WEB-INF/template.xhtml">
+        <head>
+            <link rel="stylesheet" href="css/bootstrap.min.css"/>
+            <ui:define name="title"><title>Kwetter - #{userBean.username}</title></ui:define>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        </head>
+
+
+        <body>
+
+            <ui:define name="content">
+                <div class="col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">Kweets</div>
+                        <div class="panel-body">
+                            <h:form id="form">
+                                <p:dataList value="#{userBean.user.kweets}" var="kweet" itemType="none">
+                                    <f:facet name="header">
+                                    </f:facet>
+                                    <div class="row">
+                                        <div class="col-sm-3">#{kweet.date}, #{kweet.location}</div>
+                                        <div class="col-sm-9">#{kweet.content}</div>
+                                    </div>
+                                    <hr/>
+                                </p:dataList>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">Details</div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-sm-3">Name</div>
+                                <div class="col-sm-9">#{userBean.user.screenName}</div>
+                            </div>
+                            <hr/>
+                            <div class="row">
+                                <div class="col-sm-3">Location</div>
+                                <div class="col-sm-9">#{userBean.user.location}</div>
+                            </div>
+                            <hr/>
+                            <div class="row">
+                                <div class="col-sm-3">Web</div>
+                                <div class="col-sm-9">#{userBean.user.web}</div>
+                            </div>
+                            <hr/>
+                            <div class="row">
+                                <div class="col-sm-3">Bio</div>
+                                <div class="col-sm-9">#{userBean.user.bio}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">Statistics</div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h:form>
+                                        <p:commandLink action="#{userBean.setMode(0)}" value="Following" update=":kweetsform:kweetsformlist">
+                                        </p:commandLink>
+                                    </h:form>
+                                </div>
+                                <div class="col-sm-9">#{userBean.user.following.size()}</div>
+                            </div>
+                            <hr/>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <h:form>
+                                        <p:commandLink action="#{userBean.setMode(1)}" value="Followers" update=":kweetsform:kweetsformlist">
+                                        </p:commandLink>
+                                    </h:form></div>
+                                <div class="col-sm-9">#{userBean.followers.size()}</div>
+                            </div>
+                            <hr/>
+                            <div class="row">
+                                <div class="col-sm-3">Kweets</div>
+                                <div class="col-sm-9">#{userBean.user.kweets.size()}</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">Following/ers</div>
+                        <div class="panel-body">
+                            <h:form id="kweetsform">
+                                <p:dataList value="#{userBean.followingers}" var="follow" itemType="none" id="kweetsformlist">
+                                    <div class="row">
+                                        <h:commandLink action="UserProfile.xhtml" value="#{follow.screenName}">
+                                            <f:param name="user" value="#{follow.screenName}" />
+                                        </h:commandLink>
+                                    </div>
+                                </p:dataList>
+                            </h:form>
+                        </div>
+                    </div>
+
+                </div>
+
+            </ui:define>
+
+        </body>
+
+    </ui:composition>
+
+</html>
