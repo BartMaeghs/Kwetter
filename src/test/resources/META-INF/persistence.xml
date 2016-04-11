@@ -5,6 +5,7 @@
     <class>yolo.sjwek.kwetter.model.Kweet</class>
     <class>yolo.sjwek.kwetter.model.User</class>
     <class>yolo.sjwek.kwetter.model.Hashtag</class>
+    <class>yolo.sjwek.kwetter.model.UserGroup</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>

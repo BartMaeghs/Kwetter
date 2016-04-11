@@ -15,6 +15,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -50,6 +52,25 @@ public class User implements Serializable {
     @OneToMany
     private List<Kweet> mentions;
 
+    @JoinTable(
+           joinColumns = @JoinColumn(name = "screenname", referencedColumnName = "screenname"),
+           inverseJoinColumns = @JoinColumn(name = "groupname", referencedColumnName = "name"))
+    @ManyToMany
+    private List<UserGroup> group = new ArrayList<>();
+
+    public List<UserGroup> getGroup() {
+        return group;
+    }
+
+    public void setGroup(List<UserGroup> group) {
+        this.group = group;
+    }
+    
+    public void addGroup (UserGroup group) {
+        this.group.add(group);
+    }
+    
+    
     public User() {
     }
 

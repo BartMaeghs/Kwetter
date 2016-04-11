@@ -11,6 +11,7 @@ import javax.persistence.Persistence;
 import org.junit.Test;
 import yolo.sjwek.kwetter.model.Kweet;
 import yolo.sjwek.kwetter.model.User;
+import yolo.sjwek.kwetter.model.UserGroup;
 import yolo.sjwek.kwetter.service.KwetterService;
 
 /**
@@ -71,6 +72,14 @@ public class DatabaseFillerIT {
         
         em.getTransaction().begin();
         service.followUser(stalko, testo);
+        em.getTransaction().commit();
+        
+        em.getTransaction().begin();
+        User admin = new User("admin", "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918", "Administan", "www.admin.com", "Ik ben kwetman, super snel kwetteren!");
+        UserGroup group = new UserGroup("admin");
+        em.persist(group);
+        admin.addGroup(group);
+        em.persist(admin);
         em.getTransaction().commit();
     }
     
